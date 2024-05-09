@@ -213,15 +213,12 @@ class EscController extends AbstractController
         $pointsToGive = [12, 10, 8, 7, 6, 5, 4, 3, 2, 1];
         foreach (EscVotingRelation::cases() as $voteNr => $choiceLevel) {
             $getter = $choiceLevel->getGetterForEscChoice();
-            dump($getter);
+
             foreach ($activeEvent->getVotes() as $vote) {
                 $countryId = $vote->$getter() - 1;
                 $country = $countryList[$countryId];
                 $country['points'] = $country['points'] + $pointsToGive[$voteNr];
                 $country['votesFrom'][$vote->getName()] = $pointsToGive[$voteNr];
-                dump(
-                    $vote->getName() . ' gives ' . $countryList[$countryId][2] . ' ' . $pointsToGive[$voteNr] . 'points'
-                );
                 $countryList[$countryId] = $country;
             }
         }

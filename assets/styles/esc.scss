@@ -150,7 +150,8 @@ body{
 }
 
 .container {
-  height: 100vh; /* Set container height to 100% of viewport height */
+  height: 100vh;
+  margin-bottom: 50px;
 
   .name{
     font-size: 3.3em;
@@ -177,6 +178,7 @@ body{
     cursor: pointer;
     width: fit-content;
   }
+  margin-bottom: 30px;
 }
 
 
@@ -278,7 +280,7 @@ body{
 }
 
 .country {
-  color: #33a02c;
+  //color: #33a02c;
 }
 
 @keyframes fadeIn {
@@ -519,8 +521,10 @@ header{
   }
 }
 
-footer{
+
   .footer {
+    margin-top: 50px;
+
     background-color: $headerBackground;
 
     color: #fff;
@@ -529,5 +533,47 @@ footer{
     position: fixed;
     bottom: 0;
     width: 100%;
+  }
+
+
+.detail-result{
+  background-color: $poolBackground;
+}
+
+.country-card {
+
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  width: fit-content;
+  margin-bottom: 20px;
+  .country-header {
+    @extend .choice;
+    margin-bottom: 0px;
+
+    .placing-header{
+      margin-bottom: 20px;
+      border-bottom: 8px solid $choiceFont;
+    }
+    .points {
+      color: $choiceFont;
+      font-size: 0.8em;
+    }
+    .number{
+      display: none;
+    }
+  }
+
+  .votes-container {
+    @extend .choice;
+    background: $choiceBackground;
+    color: $choiceFont;
+    font-size: 2.5em;
+
+    .points-list{
+      .points-list-entry{
+        margin-bottom: 20px;
+      }
+    }
   }
 }

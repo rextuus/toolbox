@@ -1,0 +1,37 @@
+{% extends 'esc/esc_base.html.twig' %}
+
+{% block title %}ESC Vote{% endblock %}
+
+{% block body %}
+<div class="container" id="container">
+    <div class="detail-result">
+        {% for entry in entries %}
+            <div class="country-card">
+                <div class="country-header" onclick="toggleVotes('{{ loop.index }}')">
+                    {{ htmls[loop.index - 1]|raw }}
+                </div>
+                <div id="votes-{{ loop.index }}" class="votes-container" style="display: none;">
+                    <h3>Votes From:</h3>
+                    <div class="points-list">
+                        {% for voter, points in entry['votesFrom'] %}
+                            <div class="points-list-entry">{{ voter }}: {{ points }}</div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+
+        <script>
+            function toggleVotes(index) {
+                var votesContainer = document.getElementById('votes-' + index);
+                if (votesContainer.style.display === 'none') {
+                    votesContainer.style.display = 'block';
+                } else {
+                    votesContainer.style.display = 'none';
+                }
+            }
+        </script>
+
+    </div>
+</div>
+{% endblock %}

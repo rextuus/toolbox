@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\EscEvent;
 use App\Esc\Content\Event\EscEventService;
 use App\Esc\Content\Voting\Data\EscVotingData;
+use App\Esc\Content\Voting\EscVotingRelation;
 use App\Esc\Content\Voting\EscVotingService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -76,7 +77,7 @@ class EscController extends AbstractController
 
         $activeEvent = $this->escEventService->getCurrentlyActiveEvent();
 
-        $choices = $this->getChoices($activeEvent);
+        $choices = $this->getChoices($activeEvent->getParticipantList());
 
         $fields = [
             '12 Punkte',
@@ -156,7 +157,7 @@ class EscController extends AbstractController
     public function getResult(Request $request): Response
     {
         $activeEvent = $this->escEventService->getCurrentlyActiveEvent();
-        $choices = $this->getChoices($activeEvent);
+        $choices = $this->getChoices($activeEvent->getParticipantList());
 
         $result = [];
         $participants = $activeEvent->getParticipantList();
@@ -196,15 +197,81 @@ class EscController extends AbstractController
         ]);
     }
 
+
+    #[Route('/result-overview', name: 'app_esc_result_overview')]
+    public function getResultOverview(Request $request): Response
+    {
+        $activeEvent = $this->escEventService->getCurrentlyActiveEvent();
+        $countryList = $activeEvent->getParticipantList();
+        foreach ($countryList as $nr => $participant) {
+            $participant['points'] = 0;
+            $participant['place'] = 0;
+            $participant['votesFrom'] = [];
+            $countryList[$nr] = $participant;
+        }
+
+        $pointsToGive = [12, 10, 8, 7, 6, 5, 4, 3, 2, 1];
+        foreach (EscVotingRelation::cases() as $voteNr => $choiceLevel) {
+            $getter = $choiceLevel->getGetterForEscChoice();
+            dump($getter);
+            foreach ($activeEvent->getVotes() as $vote) {
+                $countryId = $vote->$getter() - 1;
+                $country = $countryList[$countryId];
+                $country['points'] = $country['points'] + $pointsToGive[$voteNr];
+                $country['votesFrom'][$vote->getName()] = $pointsToGive[$voteNr];
+                dump(
+                    $vote->getName() . ' gives ' . $countryList[$countryId][2] . ' ' . $pointsToGive[$voteNr] . 'points'
+                );
+                $countryList[$countryId] = $country;
+            }
+        }
+
+        usort(
+            $countryList,
+            function ($a, $b) {
+                return $a['points'] <=> $b['points'];
+            }
+        );
+
+        $countryList = array_reverse($countryList);
+        foreach ($countryList as $nr => $country) {
+            $country['place'] = (string)$nr + 1 . '.';
+            $countryList[$nr] = $country;
+        }
+
+        $html = $this->getChoices($countryList, true);
+
+        return $this->render('esc/result_overview.html.twig', [
+            'entries' => $countryList,
+            'htmls' => $html,
+        ]);
+    }
+
     /**
      * @return array<string>
      */
-    private function getChoices(EscEvent $activeEvent): array
+    private function getChoices(array $contributors, bool $placeAndPoints = false): array
     {
         $choices = [];
-        foreach ($activeEvent->getParticipantList() as $contributor) {
+        foreach ($contributors as $contributor) {
+            $additionalHtml = '';
+
+            if ($placeAndPoints) {
+                $additionalHtml = sprintf(
+                    '
+                <span class="placing-header">
+                    <span class="place">%s</span>
+                    <span class="points">%s Punkte</span>
+                </span>
+                        ',
+                    $contributor['place'],
+                    $contributor['points'],
+                );
+            }
+
             $choices[] = sprintf(
-                '<span>
+                '%s
+                        <span>
                             <span class="flag fi fi-%s fis"></span>
                             <span class="number">%s</span> <span class="country">%s</span>
                         </span>
@@ -213,6 +280,7 @@ class EscController extends AbstractController
                             <span class="song">%s</span>
                         </span>
                         ',
+                $additionalHtml,
                 $contributor[0],
                 $contributor[1],
                 $contributor[2],

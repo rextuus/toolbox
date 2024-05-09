@@ -25,6 +25,7 @@ class EscEventFactory
         $escEvent->setYear($data->getYear());
         $escEvent->setCountry($data->getCountry());
         $escEvent->setCurrentlyActive($data->getCurrentlyActive());
+        $escEvent->setParticipantList([]);
 
         return $escEvent;
     }

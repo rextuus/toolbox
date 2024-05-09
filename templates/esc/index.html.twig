@@ -1,0 +1,23 @@
+{% extends 'esc/esc_base.html.twig' %}
+
+{% block title %}ESC Vote{% endblock %}
+
+{% block body %}
+
+    <div class="container">
+
+    <div class="main">
+        <div class="intro">
+            <p class="intro-text">Welcome to Eurovision Song Contest 2024 in Sweden!</p>
+            <span class="spacer"></span>
+            <a href="{{ path('app_esc_vote') }}" class="button">Vote Now</a>
+            <a href="{{ path('app_esc_result') }}" class="button">View Results</a>
+            <a href="{{ path('app_esc_result') }}" class="button">Result Details</a>
+        </div>
+    </div>
+{#    <div class="footer">#}
+{#        <p>a product of the &copy;WH-Company</p>#}
+{#    </div>#}
+    </div>
+
+{% endblock %}

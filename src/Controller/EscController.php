@@ -21,8 +21,15 @@ class EscController extends AbstractController
     ) {
     }
 
-    #[Route('/vote', name: 'app_esc_vote')]
+    #[Route('/', name: 'app_esc_index')]
     public function index(): Response
+    {
+        return $this->render('esc/index.html.twig', [
+        ]);
+    }
+
+    #[Route('/vote', name: 'app_esc_vote')]
+    public function vote(): Response
     {
         $raw = [
             ["cy", "01", "Zypern", "Silia Kapsis", "Liar"],
@@ -165,18 +172,18 @@ class EscController extends AbstractController
             $flags[$participant[2]] = $participant[0];
         }
 
-        foreach ($activeEvent->getVotes() as $vote){
+        foreach ($activeEvent->getVotes() as $vote) {
             $votes = [
-                $participants[$vote->getTenthChoice()][2] => 1,
-                $participants[$vote->getNinthChoice()][2] => 2,
-                $participants[$vote->getEightChoice()][2] => 3,
-                $participants[$vote->getSeventhChoice()][2] => 4,
-                $participants[$vote->getSixthChoice()][2] => 5,
-                $participants[$vote->getFifthChoice()][2] => 6,
-                $participants[$vote->getFirthChoice()][2] => 7,
-                $participants[$vote->getThirdChoice()][2] => 8,
-                $participants[$vote->getSecondChoice()][2] => 10,
-                $participants[$vote->getFirstChoice()][2] => 12,
+                $participants[$vote->getTenthChoice() - 1][2] => 1,
+                $participants[$vote->getNinthChoice() - 1][2] => 2,
+                $participants[$vote->getEightChoice() - 1][2] => 3,
+                $participants[$vote->getSeventhChoice() - 1][2] => 4,
+                $participants[$vote->getSixthChoice() - 1][2] => 5,
+                $participants[$vote->getFifthChoice() - 1][2] => 6,
+                $participants[$vote->getFirthChoice() - 1][2] => 7,
+                $participants[$vote->getThirdChoice() - 1][2] => 8,
+                $participants[$vote->getSecondChoice() - 1][2] => 10,
+                $participants[$vote->getFirstChoice() - 1][2] => 12,
             ];
             $result[] = ['name' => $vote->getName(), 'votes' => $votes];
         }

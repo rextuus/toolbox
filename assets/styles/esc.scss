@@ -1,4 +1,5 @@
 $bodyBackground: #303030;
+$headerBackground: #303030;
 
 $poolBackground: #2a3954;
 $choiceBackground: #3d443d;
@@ -9,7 +10,12 @@ $targetBackground: $poolBackground;
 
 body{
   background: $bodyBackground;
+  background-image: url('https://res.cloudinary.com/dl4y4cfvs/image/upload/v1715264826/esc/ecb40128-439f-425e-a460-8b29f483e22a.png'); /* Adjust the path as needed */
+  background-size: cover; /* Ensure the background image covers the entire viewport */
+  background-position: center; /* Center the background image */
+  margin: 0px;
 }
+
 .pool {
   background: $poolBackground;
   margin: 20px;
@@ -162,6 +168,7 @@ body{
     font-size: 3.3em;
     background: #415d35;
     margin: 20px;
+    margin-bottom: 100px;
     padding: 20px;
 
     border: 2px solid black;
@@ -419,4 +426,108 @@ body{
   color: black;
   text-decoration: none;
   cursor: pointer;
+}
+
+
+
+// index page
+
+.header {
+  font-size: 3.5em;
+  background-color: #1a1a1a;
+  color: #fff;
+  text-align: center;
+  padding: 20px 0;
+}
+
+.main {
+  padding: 20px;
+}
+
+.intro {
+  font-size: 2.5em;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+
+.intro-text{
+  font-size: 1.5em;
+  color: #f8f8f8;
+  box-shadow: 50px 55px 15px rgba(0, 0, 0, 0.3); // Increased spread and blur for a larger, softer shadow
+  background: $bodyBackground;
+}
+
+.spacer{
+  //min-height: 300px;
+  //max-width: 50%;
+}
+
+// Apply the mixin to the .button class
+.button {
+  background-color: #FFD700;
+  color: #000;
+  border: none;
+  padding: 10px 20px;
+  margin: 20px;
+  margin-bottom: 100px;
+  text-decoration: none;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 2.1em;
+  width: fit-content;
+  border: black 5px solid;
+
+  // Include the button-shadow mixin
+  box-shadow: 50px 55px 15px rgba(0, 0, 0, 0.3); // Increased spread and blur for a larger, softer shadow
+}
+
+.button:hover {
+  background-color: #FFA500;
+}
+
+header{
+  width: 100%;
+
+  .header{
+    width: 100%;
+    text-align: start;
+
+    background-color: $headerBackground;
+    color: #fff;
+    margin-bottom: 20px;
+    padding-bottom: 0px;
+    a{
+      color: #fff;
+      text-decoration: none;
+
+      svg{
+        width: 50px;
+      }
+    }
+
+    .welcome{
+      background: rgba(255, 36, 252, 0.85);
+      color: #f8f8f8;
+      font-size: 0.4em;
+      text-align: center;
+      padding: 10px;
+      border: solid 20px $headerBackground;
+    }
+  }
+}
+
+footer{
+  .footer {
+    background-color: $headerBackground;
+
+    color: #fff;
+    text-align: center;
+    padding: 10px 0;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+  }
 }

@@ -29,4 +29,14 @@
     array (
     ),
   ),
+  'js-confetti' => 
+  array (
+    'version' => '0.12.0',
+    'dependencies' => 
+    array (
+    ),
+    'extraFiles' => 
+    array (
+    ),
+  ),
 );

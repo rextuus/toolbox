@@ -28,6 +28,9 @@
     "dependencies": {
         "@interactjs/interact": "^1.10.27",
         "bootstrap": "^5.3.3",
-        "interactjs": "^1.10.27"
+        "country-flag-icons": "^1.5.11",
+        "flag-icons": "^7.2.1",
+        "interactjs": "^1.10.27",
+        "js-confetti": "^0.12.0"
     }
 }

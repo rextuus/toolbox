@@ -31,4 +31,7 @@ return [
     '@symfony/ux-live-component' => [
         'path' => './vendor/symfony/ux-live-component/assets/dist/live_controller.js',
     ],
+    'js-confetti' => [
+        'version' => '0.12.0',
+    ],
 ];

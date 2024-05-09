@@ -5,6 +5,7 @@
 {% block body %}
     <div class="container" id="container">
         <div id="targets" class="targets visible">
+            <div class="choice-label">Dein Voting</div>
             {% for field in fields %}
                 <div class="target-container">
                     <div class="target-name">{{ field }}</div>
@@ -13,8 +14,12 @@
             {% endfor %}
         </div>
         <div id="pool" class="pool hidden" id="pool">
+            <div class="contributors-label">Teilnehmer</div>
+
             {% for choice in choices %}
-                <div id="choice-{{ loop.index }}" class="choice">{{ choice }}</div>
+                <div id="choice-{{ loop.index }}" class="choice">
+                    {{ choice|raw }}
+                </div>
             {% endfor %}
         </div>
         <input type="text" id="name" class="name" placeholder="Name">
@@ -24,10 +29,19 @@
 
         <div id="errorModal" class="modal">
             <div class="modal-content">
-                <span class="modal-close">&times;</span>
+{#                <span class="modal-close">&times;</span>#}
                 <p id="errorMessage">Error Message</p>
             </div>
         </div>
+        <div id="confirmationModal" class="modal">
+            <div class="modal-content">
+{#                <span class="modal-close" id="confirm-close">&times;</span>#}
+                <p>Möchtest du dein voting wirklich abgeben?</p>
+                <button class="modal-confirm" id="confirmYes">Yes</button>
+                <button class="modal-decline" id="confirmNo">No</button>
+            </div>
+        </div>
+
     </div>
 
 {% endblock %}

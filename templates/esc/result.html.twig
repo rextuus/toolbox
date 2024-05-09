@@ -1,0 +1,49 @@
+{% extends 'esc/esc_base.html.twig' %}
+
+{% block title %}ESC Vote{% endblock %}
+
+{% block body %}
+<div class="container" id="container">
+    <div class='animation-header'>
+        <div id='active-giveaway'>
+            <p>Current Point Giveaway:</p>
+            <p><span id='user-name'></span> is giving <span id='points'></span> points to <span id='country'></span></p>
+        </div>
+    </div>
+
+    <div class='vote-container'>
+        <h2>Aktuelle Punkteliste</h2>
+        <ul id='participants-list'>
+            {% for participant in participants %}
+            <li class="participant-list-entry">
+                {{ participant|raw }}
+                <span id="{{ participantNames[loop.index - 1] }}" class="">0 Punkte</span>
+            </li>
+
+            {% endfor %}
+        </ul>
+
+    </div>
+
+    <div id="show-modal" class="show-modal">
+        <div id="show-modal-content" class="show-modal-content">
+            <span class="show-close">&times;</span>
+            <h2>List of Points</h2>
+            <ul>
+                <li>Point 1</li>
+                <li>Point 2</li>
+                <li>Point 3</li>
+                <li>Point 4</li>
+                <li>Point 5</li>
+                <li>Point 6</li>
+                <li>Point 7</li>
+                <li>Point 8</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        let data = {{ votesRaw|json_encode|raw }};
+        let flags = {{ flags|json_encode|raw }};
+    </script>
+    {% endblock %}

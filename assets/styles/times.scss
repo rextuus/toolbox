@@ -1,0 +1,180 @@
+$keyForeground: #f8f8f8;
+$backGround: #121213;
+$correct: #538d4e;
+$present: #b59f3b;
+$absent: #3a3a3c;
+
+body{
+  background-color: $backGround;
+  height: 100vh;
+}
+
+.container{
+  display: flex;
+  flex-direction: column; /* Stack items vertically */
+  height: 100%;
+
+  &.wordle-home{
+    background-color: $backGround;
+  }
+}
+
+.wrapper {
+  flex: 2;
+
+  display: flex;
+  flex-direction: column;
+  //height: 100vh;
+  height: 100%;
+  justify-content: end; /* Center vertically */
+
+}
+
+.center-container {
+  display: flex;
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+}
+
+.grid-container {
+  width: 80%; /* Adjust as needed */
+  display: flex;
+  flex-direction: column; /* Stack lines vertically */
+}
+
+.grid-line {
+  display: flex;
+  flex-direction: row; /* Align cells horizontally */
+  gap: 10px; /* Add space between cells */
+  margin-bottom: 10px;
+}
+
+.grid-cell {
+  color: $keyForeground;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-transform: uppercase;
+  font-size: 4.9em;
+  font-family: 'arial';
+  font-weight: bold;
+
+
+  flex: 1; /* Each cell takes equal space */
+  border: 6px solid #3a3a3c;
+  padding: 10px;
+  text-align: center;
+  aspect-ratio: 1; /* Ensure cells maintain a 1:1 aspect ratio */
+  transition: transform 0.3s ease; /* Smooth transition for flipping */
+
+  &.flipped {
+    transform: rotateY(180deg);
+    transform-origin: center; /* Set the transformation origin to the center of the cell */
+  }
+
+  &[data-state='correct'] {
+    background-color: $correct;
+    border: 6px solid $correct;
+  }
+
+  &[data-state='present'] {
+    background-color: $present;
+    border: 6px solid $present;
+  }
+
+  &[data-state='absent'] {
+    background-color: $absent;
+    border: 6px solid $absent;
+  }
+}
+
+.secondary-container {
+  flex: 1;
+  background-color: lightgray; /* Just for demonstration */
+}
+
+
+
+$keyBackground: #818384;
+
+.keyboard {
+  flex: 1; /* Each cell takes equal space */
+
+  //height: var(--keyboard-height);
+  margin: 50px 8px 0;
+
+  user-select: none;
+  justify-content: center;
+  align-items: center;
+
+}
+
+.row {
+  display: flex;
+  width: 100%;
+  margin: 0 auto 8px;
+  /* https://stackoverflow.com/questions/46167604/ios-html-disable-double-tap-to-zoom */
+  touch-action: manipulation;
+}
+
+.key {
+  //font-family: 'nyt-franklin';
+  font-size: 2.9em;
+  font-weight: bold;
+  border: 0;
+  padding: 0;
+  margin: 6px 16px 0 0;
+  height: 120px;
+  border-radius: 6px;
+  cursor: pointer;
+  user-select: none;
+  background-color: $keyBackground;
+  color: $keyForeground;
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-transform: uppercase;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0.3);
+
+  &:last-of-type {
+    margin: 6px 0 0 0;
+  }
+
+  &[data-state='correct'] {
+    background-color: $correct;
+    border: 6px solid $correct;
+  }
+
+  &[data-state='present'] {
+    background-color: $present;
+    border: 6px solid $present;
+  }
+
+  &[data-state='absent'] {
+    background-color: $absent;
+    border: 6px solid $absent;
+  }
+  //
+  //&.fade {
+  //  transition: background-color 0.1s ease, color 0.1s ease;
+  //}
+}
+
+.half {
+  flex: 0.5;
+  background-color: #121213;
+
+}
+
+.one {
+  flex: 1;
+  background-color: #121213;
+
+}
+
+.oneAndAHalf {
+  flex: 1.5;
+
+  font-size: 2.3em;
+}

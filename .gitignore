@@ -57,3 +57,41 @@
 npm-debug.log
 yarn-error.log
 ###< symfony/webpack-encore-bundle ###
+
+
+/.idea/
+/cov/
+Makefile.stage
+docker/conf/composer/auth.json
+docker/conf/composer-cache/*
+!docker/conf/composer-cache/.htaccess
+docker/elasticsearch/conf/*
+
+###> symfony/framework-bundle ###
+/env/.env.local
+/env/.env.local.php
+/env/.env.*.local
+/config/secrets/prod/prod.decrypt.private.php
+/public/bundles/
+/var/
+###< symfony/framework-bundle ###
+/requests/
+
+###> phpunit/phpunit ###
+.phpunit.result.cache
+###< phpunit/phpunit ###
+
+###> symfony/phpunit-bridge ###
+.phpunit
+###< symfony/phpunit-bridge ###
+
+###> squizlabs/php_codesniffer ###
+/.phpcs-cache
+/phpcs.xml
+###< squizlabs/php_codesniffer ###
+
+/wiktionary_titles
+/wiktionary_titles_2
+/assets/vendor/
+
+.env.local

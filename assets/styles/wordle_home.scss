@@ -1,0 +1,99 @@
+$welcomeBackground: #e3e3e1;
+
+.welcome-module_icon{
+  width: 200px;
+  height: 200px;
+  background-image: url('https://res.cloudinary.com/dl4y4cfvs/image/upload/v1719942446/michuworlde/r3jjrkfoind01kvieby1.svg');
+  background-size: cover;
+}
+
+.wordle-home{
+  display: flex;
+  background-color: $welcomeBackground;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: center; /* If you also want to center horizontally */
+  flex-direction: column;  /* To make items stacked vertically, not side-by-side */
+
+  .welcome-header{
+    font-size: 5em;
+    font-weight: bolder;
+    margin-top: 50px;
+
+  }
+
+  .welcome-info{
+    font-size: 3.5em;
+    text-align: center;
+    margin-top: 50px;
+    margin-left: 10%;
+    margin-right: 10%;
+
+    margin-bottom: 30px;
+  }
+
+  .welcome-buttons{
+    display: flex;
+    flex-direction: column;
+    font-size: 2.5em;
+
+    .rounded-button{
+      margin-bottom: 20px;
+
+      padding: 40px 150px;
+      font-size: 1em;
+      background-color: black; /* Black background */
+      border: none; /* Remove borders */
+      color: white; /* White text */
+      cursor: pointer; /* Mouse pointer on hover */
+      border-radius: 1.5em; /* Rounded corners */
+      text-align: center;
+    }
+
+    /* On mouse hover */
+    .rounded-button:hover {
+      background-color: #555555; /* Darker grey */
+    }
+
+    /* On mouse click */
+    .rounded-button:active {
+      background-color: #444444; /* Even darker grey */
+      box-shadow: 0 5px #666;
+      transform: translateY(4px);
+    }
+
+    .secondary{
+      background-color: transparent;
+      color: black;
+      border: 1px solid;
+    }
+  }
+
+  .welcome-footer{
+    display: flex;
+    flex-direction: column;
+    font-size: 2.5em;
+    text-align: center;
+
+    margin-top: 50px;
+
+    .element{
+      margin-bottom: 10px;
+    }
+
+    .date{
+      font-weight: bold;
+    }
+  }
+}
+
+.contentWelcomeContainer {
+  //height: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: column;
+
+
+}

@@ -1,0 +1,11 @@
+<h1>Hallo. Bitte bestätige deine Email-Adresse</h1>
+<p>Du hast dich erfolgreich bei optatio registriert</p>
+<p>
+    Um die Registrierung abzuschließen, klicke einfach auf folgenden link: <br><br>
+    <a href="{{ signedUrl|raw }}">Registrierung bestätigen</a>.
+    Dieser Link läuft ab in {{ expiresAtMessageKey|trans(expiresAtMessageData, 'VerifyEmailBundle') }}.
+</p>
+
+<p>
+    Cheers!
+</p>

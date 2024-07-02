@@ -26,7 +26,6 @@ abstract class AbstractBaseRepository extends ServiceEntityRepository
         /** @var EntityManager $em */
         $em = $this->getEntityManager();
         $em->persist($entity);
-        $em->flush($entity);
     }
 
     /**

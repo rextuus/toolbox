@@ -22,6 +22,7 @@ class EscEventService
     {
         $escEvent = $this->factory->createByData($data);
         $this->repository->persist($escEvent);
+        $this->repository->flush($escEvent);
         return $escEvent;
     }
 
@@ -29,6 +30,7 @@ class EscEventService
     {
         $escEvent = $this->factory->mapData($data, $escEvent);
         $this->repository->persist($escEvent);
+        $this->repository->flush($escEvent);
         return $escEvent;
     }
 

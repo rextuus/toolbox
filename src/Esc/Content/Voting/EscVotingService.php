@@ -21,6 +21,7 @@ class EscVotingService
     {
         $escVoting = $this->factory->createByData($data);
         $this->repository->persist($escVoting);
+        $this->repository->flush($escVoting);
         return $escVoting;
     }
 
@@ -28,6 +29,7 @@ class EscVotingService
     {
         $escVoting = $this->factory->mapData($data, $escVoting);
         $this->repository->persist($escVoting);
+        $this->repository->flush($escVoting);
         return $escVoting;
     }
 

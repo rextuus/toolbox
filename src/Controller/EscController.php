@@ -75,6 +75,35 @@ class EscController extends AbstractController
             ['es', "22", "Spanien", "Nebulossa", "Zorra"]
         ];
 
+        $final = [
+            ['se', "01", "Schweden", "Marcus & Martinus", "Unforgettable"],
+            ["ua", "02", "Ukraine", "Alyona Alyona & Jerry Heil", "Teresa & Maria"],
+            ['de', "03", "Deutschland", "Isaak", "Always On The Run"],
+            ["lu", "04", "Luxemburg", "Tali", "Fighter"],
+            ['nl', "05", "Niederlande", "Joost Klein", "Europapa"],
+            ['il', "06", "Israel", "Eden Golan", "Hurricane"],
+            ["lt", "07", "Litauen", "Silvester Belt", "Luktelk"],
+            ['es', "08", "Spanien", "Nebulossa", "Zorra"],
+            ['ee', "09", "Estland", "5Miinust & Puuluup", "(Nendest) narkootikumidest ei tea me (küll) midagi"],
+            ["ie", "10", "Irland", "Bambie Thug", "Doomsday Blue"],
+            ['lv', "11", "Lettland", "Dons", "Hollow"],
+            ['gr', "12", "Griechenland", "Marina Satti", "Zari"],
+            ['gb', "13", "UK", "Olly Alexander", "Dizzy"],
+            ['no', "14", "Norwegen", "Gåte", "Ulveham"],
+            ['it', "15", "Italien", "Angelina Mango", "La noia"],
+            ["rs", "16", "Serbien", "Teya Dora", "Ramonda"],
+            ["fi", "17", "Finnland", "Windows95man", "No Rules"],
+            ["pt", "18", "Portugal", "Iolanda", "Grito"],
+            ['am', "19", "Armenien", "Ladaniva", "Jako"],
+            ["cy", "20", "Zypern", "Silia Kapsis", "Liar"],
+            ['ch', "21", "Schweiz", "Nemo", "The Code"],
+            ["si", "22", "Slowenien", "Raiven", "Veronika"],
+            ["hr", "23", "Kroatien", "Baby Lasagna", "Rim Tim Tagi Dim"],
+            ['ge', "24", "Georgien", "Nutsa Buzaladze", "Fire Fighter"],
+            ['fr', "25", "Frankreich", "Slimane", "Mon amour"],
+            ['at', "26", "Österreich", "Kaleen", "We Will Rave"],
+        ];
+
         $activeEvent = $this->escEventService->getCurrentlyActiveEvent();
 
         $choices = $this->getChoices($activeEvent->getParticipantList());

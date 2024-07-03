@@ -31,11 +31,28 @@ export class Key {
             assigned = true;
         }
 
+        // placeholders should have no function
+        if (this.element.classList.contains('half')){
+            assigned = true;
+        }
+
         if (!assigned){
             this.element.addEventListener('click', () => {
                 this.addLetter();
             });
         }
+
+        this.element.addEventListener('mousedown', function () {
+            this.classList.add('clicked');
+        });
+
+        this.element.addEventListener('mouseup', function () {
+            const keyElement = this;
+
+            setTimeout(function () {
+                keyElement.classList.remove('clicked');
+            }, 100);  // Adjust time as per your need
+        });
     }
 
     async submitWord() {

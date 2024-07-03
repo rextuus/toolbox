@@ -11,6 +11,7 @@ use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
@@ -18,7 +19,7 @@ use Symfony\Component\Routing\Attribute\Route;
 class TimesGameController extends AbstractController
 {
     #[Route('/', name: 'app_times_game')]
-    public function index(WordleRepository $wordleRepository): Response
+    public function index(WordleRepository $wordleRepository, Request $request): Response
     {
         $currentDate = new DateTime();
         $currentDate->setTime(0,0,0);
@@ -28,6 +29,19 @@ class TimesGameController extends AbstractController
         if (count($dailyWordle)){
             $wordle = strtolower($dailyWordle[0]->getValue());
         }
+
+        $dateString = $currentDate->format('Y-m-d');
+        $cookieName = 'currentGameInfo_'.$dateString;
+
+        //get the cookie
+        $cookieValue = $request->cookies->get($cookieName);
+
+        //The above line will give you the cookie value as a string.
+        //Don't forget to parse it into an array or object by json_decode() if necessary.
+        //Like so:
+        $parsedCookieValue = json_decode($cookieValue);
+
+//        dd($parsedCookieValue);
 
         return $this->render('times_game/index.html.twig', [
             'search' => $wordle,

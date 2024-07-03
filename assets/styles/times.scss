@@ -135,7 +135,7 @@ $keyBackground: #818384;
   justify-content: center;
   align-items: center;
   text-transform: uppercase;
-  -webkit-tap-highlight-color: rgba(0, 0, 0, 0.3);
+  -webkit-tap-highlight-color: transparent;
 
   &:last-of-type {
     margin: 6px 0 0 0;
@@ -159,6 +159,10 @@ $keyBackground: #818384;
   //&.fade {
   //  transition: background-color 0.1s ease, color 0.1s ease;
   //}
+}
+
+.clicked {
+  background-color: $backGround !important;
 }
 
 .half {

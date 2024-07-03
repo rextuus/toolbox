@@ -1,11 +1,13 @@
 export class WordField {
     wordLines;
+    cookieHandler;
     search;
     lastUsedCell = null;
     lastUsedLine = null;
 
-    constructor(wordLines) {
+    constructor(wordLines, cookieHandler) {
         this.wordLines = wordLines;
+        this.cookieHandler = cookieHandler;
         this.search = search;
     }
 
@@ -25,6 +27,34 @@ export class WordField {
                     console.log(usedKeys);
                     foundUnevaluated = true;
 
+                    // cookie handling
+                    let currentDate = new Date();
+                    let formattedDate = `${currentDate.getFullYear()}-${(String(currentDate.getMonth() + 1)).padStart(2, '0')}-${(String(currentDate.getDate())).padStart(2, '0')}`;
+                    let cookieName = 'currentGameInfo' + '_' + formattedDate;
+
+                    let currentGameInfo = [];
+                    if (index === 0){
+                        currentGameInfo = [{
+                            'line': index,
+                            'usedKeys': usedKeys,
+                            'word': word,
+                        }];
+                    }else{
+                        let currentGameInfoString = this.cookieHandler.getCookie(cookieName);
+                        if (currentGameInfoString) {
+                            currentGameInfo = JSON.parse(currentGameInfoString);
+                        } else {
+                            currentGameInfo = [];
+                        }
+                        currentGameInfo.push({
+                            'line': index,
+                            'usedKeys': usedKeys,
+                            'word': word,
+                        });
+                    }
+
+                    this.cookieHandler.setCookieWithObject(cookieName, currentGameInfo, 1);
+
                     usedKeys['isCorrect'] = word === search;
 
                     return usedKeys;
@@ -41,7 +71,8 @@ export class WordField {
 
     async checkWord(word) {
         try {
-            const response = await fetch('/times/game/check', {
+            // const response = await fetch('/times/game/check', {
+            const response = await fetch('https://michuwordle.com/index.php/times/game/check', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

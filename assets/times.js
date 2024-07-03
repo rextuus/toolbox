@@ -43,7 +43,7 @@ document.querySelectorAll('.grid-line')
         }
     );
 
-let wordField = new WordField(wordLines, search);
+let wordField = new WordField(wordLines, cookieHandler, search);
 
 let keyBoard = new KeyBoard();
 

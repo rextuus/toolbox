@@ -24,8 +24,6 @@ export class KeyBoard {
                 if (!currentState || statePriority[state] > statePriority[currentState]) {
                     element.setAttribute('data-state', state);
                 }
-
-                console.log(keyElement);
             }
         }
     }

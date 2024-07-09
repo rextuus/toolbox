@@ -32,6 +32,11 @@ export class Modal {
         }
     }
 
+    setSecretText(search) {
+        let wordle = this.element.querySelector('#searched-wordle');
+        wordle.textContent = search;
+    }
+
     openModal() {
         this.element.style.display = 'block';
         this.element.style.opacity = '1'; // Ensure it's fully visible

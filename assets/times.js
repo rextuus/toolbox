@@ -36,6 +36,13 @@ document.querySelectorAll('#successModal')
         }
     );
 
+let failedModal = null;
+document.querySelectorAll('#failedModal')
+    .forEach(element => {
+        failedModal = new Modal(element);
+        }
+    );
+
 let wordLines = [];
 document.querySelectorAll('.grid-line')
     .forEach(element => {
@@ -50,7 +57,7 @@ let keyBoard = new KeyBoard();
 let keys = [];
 document.querySelectorAll('.key')
     .forEach(element => {
-            let key = new Key(element, wordField, keyBoard, invalidWordModal, successModal, cookieHandler);
+            let key = new Key(element, wordField, keyBoard, invalidWordModal, successModal, failedModal, cookieHandler);
             keys.push(key);
         }
     );

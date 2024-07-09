@@ -7,9 +7,11 @@ $absent: #3a3a3c;
 body{
   background-color: $backGround;
   height: 100vh;
+  margin: 0;
 }
 
 .container{
+  margin: 8px;
   display: flex;
   flex-direction: column; /* Stack items vertically */
   height: 100%;
@@ -19,8 +21,150 @@ body{
   }
 }
 
+.appHeader {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  flex-wrap: nowrap;
+  padding: 0 var(--header-padding-x);
+  min-height: 5%;
+  width: 100%;
+  color: $keyForeground;
+  border-bottom: 1px solid $keyForeground;
+
+  button {
+    cursor: pointer;
+  }
+
+  button.icon {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0 4px;
+    color: $keyForeground;
+    margin-right: 20px;
+  }
+
+  button.icon:last-child {
+    padding-right: 0;
+  }
+}
+
+.subscribeLink {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1em;
+  color: var(--color-tone-1);
+  border: solid 1px  $keyForeground;
+  border-radius: 9999px;
+  min-width: 150px;
+  height: 50px;
+  padding: 0 12px;
+  background-color: var(--color-tone-7);
+
+  @media (min-width: 375px) {
+    width: 147px;
+  }
+  @media (min-width: 400px) {
+    margin-left: 10px;
+  }
+
+  @media (min-width: 1024px) {
+    font: 16px/21px 'nyt-franklin-600';
+    height: 44px;
+    width: 172px;
+    margin-left: 12px;
+    padding: 0 16px;
+    min-height: 35px;
+  }
+}
+
+.appHeader .title {
+  flex-grow: 2;
+  font-family: 'nyt-karnakcondensed';
+  font-weight: bolder;
+  font-size: 3.1em;
+  letter-spacing: 0.01em;
+  text-align: left;
+  left: 0;
+  right: 0;
+  pointer-events: none;
+  position: relative;
+}
+
+.menuLeft {
+  display: flex;
+  margin: 0;
+  margin-left: 50px;
+  margin-right: 50px;
+  padding: 0;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.menuRight {
+  display: flex;
+  justify-content: flex-end;
+
+  button svg {
+    vertical-align: middle;
+  }
+}
+
+#navButton {
+  padding-top: 2px;
+  padding-left: 0px;
+  padding-right: 8px;
+}
+
+@media (min-width: 1024px) {
+  .appHeader {
+    .title {
+      text-align: center;
+      font-size: 3.4em;
+    }
+
+    button.icon {
+      padding: 0 6px;
+    }
+  }
+}
+
+@media (min-width: 768px) {
+  .appHeader {
+    .title {
+      text-align: center;
+      font-size: 3.4em;
+    }
+
+    .menuLeft,
+    .menuRight {
+      // these two must be exactly the same width for the title to be centered
+      width: 350px;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .appHeader .title {
+      font-size: 36px;
+    }
+  }
+
+  #navButton {
+    padding-top: 2px;
+    padding-left: 0px;
+  }
+}
+
+.toolbar__menu {
+  display: flex;
+  align-items: center;
+}
+
 .wrapper {
-  flex: 2;
+  flex: 1;
 
   display: flex;
   flex-direction: column;
@@ -28,6 +172,7 @@ body{
   height: 100%;
   justify-content: end; /* Center vertically */
 
+  margin-top: 10px;
 }
 
 .center-container {
@@ -40,6 +185,8 @@ body{
   width: 80%; /* Adjust as needed */
   display: flex;
   flex-direction: column; /* Stack lines vertically */
+  margin-right: 50px;
+  margin-left: 50px;
 }
 
 .grid-line {
@@ -119,12 +266,12 @@ $keyBackground: #818384;
 
 .key {
   //font-family: 'nyt-franklin';
-  font-size: 2.9em;
+  font-size: 3.5em;
   font-weight: bold;
   border: 0;
   padding: 0;
   margin: 6px 16px 0 0;
-  height: 120px;
+  height: 150px;
   border-radius: 6px;
   cursor: pointer;
   user-select: none;

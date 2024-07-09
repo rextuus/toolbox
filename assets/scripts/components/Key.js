@@ -6,12 +6,13 @@ export class Key {
     successModal = null;
     cookieHandler = null;
 
-    constructor(element, wordField, keyBoard, invalidWordModal, successModal, cookieHandler) {
+    constructor(element, wordField, keyBoard, invalidWordModal, successModal, failedModal, cookieHandler) {
         this.element = element;
         this.wordField = wordField;
         this.keyBoard = keyBoard;
         this.invalidWordModal = invalidWordModal;
         this.successModal = successModal;
+        this.failedModal = failedModal;
         this.cookieHandler = cookieHandler;
 
         // enter
@@ -67,6 +68,11 @@ export class Key {
             }
             this.keyBoard.setKeyStates(usedKeys);
             console.log(usedKeys);
+
+            if (usedKeys['remainingAttempts'] < 1){
+                this.failedModal.setSecretText(search);
+                this.failedModal.openModal();
+            }
         }
     }
 

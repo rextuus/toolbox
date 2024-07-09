@@ -22,9 +22,7 @@ export class WordField {
                 const isValid = await this.checkWord(word);
 
                 if (isValid) {
-                    console.log('The word is valid!');
                     const usedKeys = await wordLine.evaluate(search);
-                    console.log(usedKeys);
                     foundUnevaluated = true;
 
                     // cookie handling
@@ -57,9 +55,14 @@ export class WordField {
 
                     usedKeys['isCorrect'] = word === search;
 
+                    let remainingAttempts = 0;
+                    if (index < this.wordLines.length) {
+                        remainingAttempts = this.wordLines.length - index - 1;
+                    }
+                    usedKeys['remainingAttempts'] = remainingAttempts;
+
                     return usedKeys;
                 } else {
-                    console.log('The word is invalid.');
                     return {}; // Return an empty object or handle as needed
                 }
             }
@@ -85,7 +88,6 @@ export class WordField {
             }
 
             const data = await response.json();
-            console.log(data.isValid); // Handle the validation result as needed
 
             // Return the validation result
             return data.isValid;

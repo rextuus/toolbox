@@ -19,7 +19,7 @@ use Symfony\Component\Routing\Attribute\Route;
 class TimesGameController extends AbstractController
 {
     #[Route('/', name: 'app_times_game')]
-    public function index(WordleRepository $wordleRepository, Request $request): Response
+    public function index(Request $request, WordleRepository $wordleRepository): Response
     {
         $currentDate = new DateTime();
         $currentDate->setTime(0,0,0);
@@ -43,8 +43,15 @@ class TimesGameController extends AbstractController
 
 //        dd($parsedCookieValue);
 
+
+        $totalAttempts = 6;
+        if ($request->query->get('test')){
+            $totalAttempts = (int) $request->query->get('test');
+        }
+
         return $this->render('times_game/index.html.twig', [
             'search' => $wordle,
+            'totalAttempts' => $totalAttempts,
         ]);
     }
 

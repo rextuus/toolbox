@@ -5,6 +5,8 @@ namespace App\Entity;
 use App\Repository\WordleRepository;
 use App\Validator\WordleDeliveryDateIsUnique;
 use App\Validator\WordleIsValidWord;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints\Length;
@@ -25,6 +27,17 @@ class Wordle
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     #[WordleDeliveryDateIsUnique]
     private ?\DateTimeInterface $deliveryDate = null;
+
+    /**
+     * @var Collection<int, WordleStatistic>
+     */
+    #[ORM\ManyToMany(targetEntity: WordleStatistic::class, mappedBy: 'wordles')]
+    private Collection $wordleStatistics;
+
+    public function __construct()
+    {
+        $this->wordleStatistics = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -51,6 +64,33 @@ class Wordle
     public function setDeliveryDate(\DateTimeInterface $deliveryDate): static
     {
         $this->deliveryDate = $deliveryDate;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, WordleStatistic>
+     */
+    public function getWordleStatistics(): Collection
+    {
+        return $this->wordleStatistics;
+    }
+
+    public function addWordleStatistic(WordleStatistic $wordleStatistic): static
+    {
+        if (!$this->wordleStatistics->contains($wordleStatistic)) {
+            $this->wordleStatistics->add($wordleStatistic);
+            $wordleStatistic->addWordle($this);
+        }
+
+        return $this;
+    }
+
+    public function removeWordleStatistic(WordleStatistic $wordleStatistic): static
+    {
+        if ($this->wordleStatistics->removeElement($wordleStatistic)) {
+            $wordleStatistic->removeWordle($this);
+        }
 
         return $this;
     }

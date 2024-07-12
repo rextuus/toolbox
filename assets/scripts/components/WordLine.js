@@ -9,6 +9,17 @@ export class WordLine {
         this.cells = this.element.querySelectorAll('.grid-cell');
     }
 
+    shakeWord() {
+        return new Promise(resolve => {
+            this.element.classList.add('shake');
+
+            this.element.addEventListener('animationend', () => {
+                this.element.classList.remove('shake');
+                resolve();  // Resolve the promise when animation ends
+            }, { once: true });
+        });
+    }
+
     getWord () {
         let word = '';
         this.cells.forEach((cell, index) => {
@@ -52,7 +63,7 @@ export class WordLine {
 
             // Split the search string into an array of characters
             const characters = search.split('');
-            console.log(characters);
+
             let usedKeys = {};
             let completedFlips = 0;
 

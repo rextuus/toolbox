@@ -6,7 +6,7 @@ export class Key {
     successModal = null;
     cookieHandler = null;
 
-    constructor(element, wordField, keyBoard, invalidWordModal, successModal, failedModal, cookieHandler) {
+    constructor(element, wordField, keyBoard, invalidWordModal, successModal, failedModal, cookieHandler, disabled) {
         this.element = element;
         this.wordField = wordField;
         this.keyBoard = keyBoard;
@@ -14,6 +14,22 @@ export class Key {
         this.successModal = successModal;
         this.failedModal = failedModal;
         this.cookieHandler = cookieHandler;
+
+        this.element.addEventListener('mousedown', function () {
+            this.classList.add('clicked');
+        });
+
+        this.element.addEventListener('mouseup', function () {
+            const keyElement = this;
+
+            setTimeout(function () {
+                keyElement.classList.remove('clicked');
+            }, 100);  // Adjust time as per your need
+        });
+
+        if (disabled){
+            return;
+        }
 
         // enter
         let assigned = false;
@@ -33,27 +49,15 @@ export class Key {
         }
 
         // placeholders should have no function
-        if (this.element.classList.contains('half')){
+        if (this.element.classList.contains('half')) {
             assigned = true;
         }
 
-        if (!assigned){
+        if (!assigned) {
             this.element.addEventListener('click', () => {
                 this.addLetter();
             });
         }
-
-        this.element.addEventListener('mousedown', function () {
-            this.classList.add('clicked');
-        });
-
-        this.element.addEventListener('mouseup', function () {
-            const keyElement = this;
-
-            setTimeout(function () {
-                keyElement.classList.remove('clicked');
-            }, 100);  // Adjust time as per your need
-        });
     }
 
     async submitWord() {
@@ -61,18 +65,56 @@ export class Key {
 
         if (Object.entries(usedKeys).length === 0) {
             this.invalidWordModal.flashMessage(3000);
-        }else{
-            if (usedKeys['isCorrect']){
-                this.successModal.openModal();
-                // Todo write cookie info
-            }
-            this.keyBoard.setKeyStates(usedKeys);
-            console.log(usedKeys);
+        } else {
+            if (usedKeys['isCorrect']) {
+                await this.saveStats(usedKeys);
 
-            if (usedKeys['remainingAttempts'] < 1){
+                this.successModal.openModal();
+
+                return;
+            }
+
+            this.keyBoard.setKeyStates(usedKeys);
+
+            if (usedKeys['remainingAttempts'] < 1) {
+                await this.saveStats(usedKeys);
+
                 this.failedModal.setSecretText(search);
                 this.failedModal.openModal();
+                // Todo write cookie info
             }
+        }
+    }
+
+    async saveStats(usedKeys) {
+
+        let params = {
+            'usedAttempts': usedKeys['usedAttempts'],
+            'wordleId': usedKeys['wordleId'],
+            'result': usedKeys['isCorrect']
+        };
+        console.log(JSON.stringify(params));
+        try {
+            // const response = await fetch('/times/game/save', {
+                const response = await fetch('https://michuwordle.com/index.php/times/game/save', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(params)
+            });
+
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+
+            const data = await response.json();
+
+            // Return the validation result
+            return data.isValid;
+        } catch (error) {
+            console.error('There was a problem with the fetch operation:', error);
+            return false;
         }
     }
 

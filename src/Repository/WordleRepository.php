@@ -53,4 +53,21 @@ class WordleRepository extends ServiceEntityRepository
         // If no gaps found, return the day after the last date
         return (clone $dates[array_key_last($dates)])->modify('+1 day');
     }
+
+    public function findLastActiveBeforeCurrent(\DateTimeInterface $deliveryDate): ?Wordle
+    {
+        $qb = $this->createQueryBuilder('w');
+        $qb->orderBy('w.deliveryDate', 'DESC')
+            ->where($qb->expr()->lt('w.deliveryDate', ':now'))
+            ->setParameter('now', ($deliveryDate)->setTime(0, 0))
+            ->setMaxResults(1);
+
+        $result = $qb->getQuery()->getResult();
+
+        if (count($result) === 1) {
+            return $result[0];
+        }
+
+        return null;
+    }
 }

@@ -10,12 +10,12 @@
                 <span class="welcome-info"> Get 6 chances to guess a 5-letter word.</span>
                 <div class="welcome-buttons">
                     <button class="rounded-button" onclick="window.location.href='{{ path('app_times_game') }}'">Play</button>
-                    <button class="rounded-button secondary">Log in</button>
+                    <button class="rounded-button secondary onclick="window.location.href='{{ path('app_times_game') }}'"">Log in</button>
                     <button class="rounded-button secondary">How to play</button>
                  </div>
                 <div class="welcome-footer">
                     <span class="element date">{{ now | date('F j, Y') }}</span>
-                    <span class="element number">No. 1109</span>
+                    <span class="element number">No. {{ id }}</span>
                     <span class="element editor">Edited by Hanna Hinzmann</span>
                 </div>
             </div>

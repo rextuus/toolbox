@@ -57,7 +57,7 @@
         <div id="invalidWordModal" class="modal">
             <div class="modal-content modal-invalid-word">
                 <img src="https://res.cloudinary.com/dl4y4cfvs/image/upload/v1720548515/michuworlde/kitchen_mitch_afiqzy.png" alt="Kitchen Mitch">
-                <div>Don't cook a spoiled mash of words</div>
+                <div>Don't cook a spoiled mash of literals</div>
             </div>
         </div>
 
@@ -206,6 +206,8 @@
     </div>
     <script>
         let search = {{ search|json_encode|raw }};
+        let wordleId = {{ wordleId|json_encode|raw }};
+        let totalAttempts = {{ totalAttempts|json_encode|raw }};
     </script>
 
 {% endblock %}

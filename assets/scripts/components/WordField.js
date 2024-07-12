@@ -2,6 +2,7 @@ export class WordField {
     wordLines;
     cookieHandler;
     search;
+    wordleId;
     lastUsedCell = null;
     lastUsedLine = null;
 
@@ -9,6 +10,7 @@ export class WordField {
         this.wordLines = wordLines;
         this.cookieHandler = cookieHandler;
         this.search = search;
+        this.wordleId = wordleId;
     }
 
     async submitCurrentLine(search) {
@@ -28,13 +30,20 @@ export class WordField {
                     // cookie handling
                     let currentDate = new Date();
                     let formattedDate = `${currentDate.getFullYear()}-${(String(currentDate.getMonth() + 1)).padStart(2, '0')}-${(String(currentDate.getDate())).padStart(2, '0')}`;
-                    let cookieName = 'currentGameInfo' + '_' + formattedDate;
+                    let cookieName = 'michu_wordle_field_info' + '_' + formattedDate;
 
                     let currentGameInfo = [];
+
+                    let cellInfo = [];
+                    wordLine.cells.forEach((cell, index) => {
+                        const state = cell.getAttribute('data-state');
+                        cellInfo.push({index: index, state: state});
+                    });
+
                     if (index === 0){
                         currentGameInfo = [{
                             'line': index,
-                            'usedKeys': usedKeys,
+                            'usedKeys': cellInfo,
                             'word': word,
                         }];
                     }else{
@@ -46,7 +55,7 @@ export class WordField {
                         }
                         currentGameInfo.push({
                             'line': index,
-                            'usedKeys': usedKeys,
+                            'usedKeys': cellInfo,
                             'word': word,
                         });
                     }
@@ -60,9 +69,13 @@ export class WordField {
                         remainingAttempts = this.wordLines.length - index - 1;
                     }
                     usedKeys['remainingAttempts'] = remainingAttempts;
-
+                    usedKeys['usedAttempts'] = index + 1;
+                    usedKeys['wordleId'] = this.wordleId;
+console.log(this.wordleId);
+console.log(usedKeys);
                     return usedKeys;
                 } else {
+                    await wordLine.shakeWord();
                     return {}; // Return an empty object or handle as needed
                 }
             }
@@ -115,6 +128,14 @@ export class WordField {
                         added = true;
                         this.lastUsedCell = cell;
                         this.lastUsedLine = wordLine;
+
+                        // Start animation
+                        cell.classList.add('pulse');
+
+                        // Remove the animation after 0.5 seconds
+                        setTimeout(function(){
+                            cell.classList.remove('pulse');
+                        }, 100);
                     }
                 }
             }
@@ -136,6 +157,29 @@ export class WordField {
             const newCellNumber = cellNumber - 1;
             const cellNumberString = parts[0] + "-" + parts[1] + "-" + newCellNumber;
             this.lastUsedCell = this.lastUsedLine.element.querySelector('#' + cellNumberString);
+        }
+    }
+
+    initFromCookie() {
+        let currentDate = new Date();
+        let formattedDate = `${currentDate.getFullYear()}-${(String(currentDate.getMonth() + 1)).padStart(2, '0')}-${(String(currentDate.getDate())).padStart(2, '0')}`;
+        let fieldCookieName = 'michu_wordle_field_info' + '_' + formattedDate;
+        let fieldCookie = this.cookieHandler.getCookie(fieldCookieName);
+
+        if (fieldCookie) {
+            const fieldInfo = JSON.parse(fieldCookie);
+            fieldInfo.forEach((info) => {
+                const lineIndex = info.line;
+                const word = info.word;
+                const upperCaseCharacters = word.toUpperCase().split('');
+                const wordLine = this.wordLines[lineIndex];
+                wordLine.cells.forEach((cell, index) => {
+                    let cellInfo = info['usedKeys'][index];
+                    cell.setAttribute('data-state', cellInfo['state']);
+                    cell.innerHTML = upperCaseCharacters[index];
+                });
+                wordLine.evaluated = true;
+            });
         }
     }
 }

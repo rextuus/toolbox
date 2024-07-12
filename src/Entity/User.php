@@ -45,6 +45,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255)]
     private ?string $lastName = null;
 
+    #[ORM\OneToOne(inversedBy: 'user', cascade: ['persist', 'remove'])]
+    private ?WordleStatistic $wordleStatistic = null;
+
     public function __construct()
     {
         $this->accessRoles = new ArrayCollection();
@@ -184,6 +187,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setIsVerified(bool $isVerified): static
     {
         $this->isVerified = $isVerified;
+
+        return $this;
+    }
+
+    public function getWordleStatistic(): ?WordleStatistic
+    {
+        return $this->wordleStatistic;
+    }
+
+    public function setWordleStatistic(?WordleStatistic $wordleStatistic): static
+    {
+        $this->wordleStatistic = $wordleStatistic;
 
         return $this;
     }

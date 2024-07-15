@@ -70,6 +70,7 @@ if (typeof search !== 'undefined') {
         fieldInfo.forEach((info) => {
             if (info['word'] === search) {
                 disabled = true;
+                successModal.changeImageRandomly();
                 successModal.openModal();
             }
         });

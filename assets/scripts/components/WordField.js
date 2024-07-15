@@ -71,8 +71,12 @@ export class WordField {
                     usedKeys['remainingAttempts'] = remainingAttempts;
                     usedKeys['usedAttempts'] = index + 1;
                     usedKeys['wordleId'] = this.wordleId;
-console.log(this.wordleId);
-console.log(usedKeys);
+
+                    usedKeys['easterEgg'] = false;
+                    if (word === 'michi'){
+                        usedKeys['easterEgg'] = word;
+                    }
+
                     return usedKeys;
                 } else {
                     await wordLine.shakeWord();

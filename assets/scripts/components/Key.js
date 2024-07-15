@@ -69,6 +69,7 @@ export class Key {
             if (usedKeys['isCorrect']) {
                 await this.saveStats(usedKeys);
 
+                this.successModal.changeImageRandomly();
                 this.successModal.openModal();
 
                 return;
@@ -83,6 +84,39 @@ export class Key {
                 this.failedModal.openModal();
                 // Todo write cookie info
             }
+
+            // easter egg handling
+            if (usedKeys['easterEgg']){
+                let newImageUrl = 'https://url_to_your_image1.png';
+                if (usedKeys['easterEgg'] === 'michi'){
+                    newImageUrl = 'https://url_to_your_image1.png';
+                }
+
+                if (usedKeys['easterEgg'] === 'hanna'){
+                    newImageUrl = 'https://url_to_your_image1.png';
+                }
+
+                let currentDate = new Date();
+                let formattedDate = `${currentDate.getFullYear()}-${(String(currentDate.getMonth() + 1)).padStart(2, '0')}-${(String(currentDate.getDate())).padStart(2, '0')}`;
+                let cookieName = 'michu_wordle_field_info' + '_' + formattedDate;
+                let currentGameInfoString = this.cookieHandler.getCookie(cookieName);
+
+                let currentGameInfo = [];
+
+                if (currentGameInfoString) {
+                    currentGameInfo = JSON.parse(currentGameInfoString);
+                }
+
+                let words = currentGameInfo.map(item => item.word);
+                let isMichiAndHannaExist = words.includes('michi') && words.includes('hanna');
+                if (isMichiAndHannaExist){
+                    newImageUrl = 'https://url_to_your_image1.png';
+                }
+
+                const imgElement = document.getElementById('success-modal-img');
+                imgElement.src = newImageUrl;
+                this.successModal.flashMessage(5000);
+            }
         }
     }
 
@@ -93,7 +127,6 @@ export class Key {
             'wordleId': usedKeys['wordleId'],
             'result': usedKeys['isCorrect']
         };
-        console.log(JSON.stringify(params));
         try {
             // const response = await fetch('/times/game/save', {
                 const response = await fetch('https://michuwordle.com/index.php/times/game/save', {

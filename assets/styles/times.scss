@@ -367,3 +367,16 @@ $keyBackground: #818384;
 
   font-size: 2.3em;
 }
+
+.statistic-container{
+  font-size: 3.5em;
+  color: $keyForeground;
+
+  .statistic-list{
+    display: flex;
+    flex-direction: column;
+    .statistic-element{
+
+    }
+  }
+}

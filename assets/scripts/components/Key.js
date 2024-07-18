@@ -69,7 +69,15 @@ export class Key {
             if (usedKeys['isCorrect']) {
                 await this.saveStats(usedKeys);
 
-                this.successModal.changeImageRandomly();
+                if (usedKeys['usedAttempts'] === 1){
+                    const text = document.getElementById('modal-won');
+                    text.innerText = 'Fucking genius';
+                    const imgElement = document.getElementById('success-modal-img');
+                    imgElement.src = 'https://res.cloudinary.com/dl4y4cfvs/image/upload/v1721329304/michuworlde/Kritek_match.gif';
+                }else{
+
+                    this.successModal.changeImageRandomly();
+                }
                 this.successModal.openModal();
 
                 return;
@@ -87,13 +95,16 @@ export class Key {
 
             // easter egg handling
             if (usedKeys['easterEgg']){
-                let newImageUrl = 'https://url_to_your_image1.png';
-                if (usedKeys['easterEgg'] === 'michi'){
-                    newImageUrl = 'https://url_to_your_image1.png';
+                let newImageUrl = 'https://res.cloudinary.com/dl4y4cfvs/image/upload/v1721329305/michuworlde/20231210_162646.jpg';
+                let newText = 'Easter';
+                if (usedKeys['easterEgg'] === 'michi' || usedKeys['easterEgg'] === 'michu'){
+                    newImageUrl = 'https://res.cloudinary.com/dl4y4cfvs/image/upload/c_scale,w_580/v1721329304/michuworlde/20210828_183911.jpg';
+                    newText = 'Nice guy';
                 }
 
                 if (usedKeys['easterEgg'] === 'hanna'){
-                    newImageUrl = 'https://url_to_your_image1.png';
+                    newImageUrl = 'https://res.cloudinary.com/dl4y4cfvs/image/upload/c_scale,w_523/v1721329304/michuworlde/20210515_235203.jpg';
+                    newText = 'Hools girl';
                 }
 
                 let currentDate = new Date();
@@ -108,13 +119,16 @@ export class Key {
                 }
 
                 let words = currentGameInfo.map(item => item.word);
-                let isMichiAndHannaExist = words.includes('michi') && words.includes('hanna');
+                let isMichiAndHannaExist = (words.includes('michi') && words.includes('hanna')) || (words.includes('michu') && words.includes('hanna'));
                 if (isMichiAndHannaExist){
-                    newImageUrl = 'https://url_to_your_image1.png';
+                    newImageUrl = 'https://res.cloudinary.com/dl4y4cfvs/image/upload/c_scale,w_516/v1721329303/michuworlde/IMG-20240601-WA0003.jpg';
+                    newText = 'Dream couple';
                 }
 
                 const imgElement = document.getElementById('success-modal-img');
                 imgElement.src = newImageUrl;
+                const text = document.getElementById('modal-won');
+                text.innerText = newText;
                 this.successModal.flashMessage(5000);
             }
         }
@@ -128,8 +142,8 @@ export class Key {
             'result': usedKeys['isCorrect']
         };
         try {
-            // const response = await fetch('/times/game/save', {
-                const response = await fetch('https://michuwordle.com/index.php/times/game/save', {
+            const response = await fetch('/times/game/save', {
+                // const response = await fetch('https://michuwordle.com/index.php/times/game/save', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

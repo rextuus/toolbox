@@ -70,7 +70,12 @@ if (typeof search !== 'undefined') {
         fieldInfo.forEach((info) => {
             if (info['word'] === search) {
                 disabled = true;
-                successModal.changeImageRandomly();
+
+                const text = document.getElementById('modal-won');
+                text.innerText = "Michu's Wordle kitchen is closed for today";
+                const imgElement = document.getElementById('success-modal-img');
+                imgElement.src = 'https://res.cloudinary.com/dl4y4cfvs/image/upload/v1720548515/michuworlde/kitchen_mitch_afiqzy.png';
+
                 successModal.openModal();
             }
         });

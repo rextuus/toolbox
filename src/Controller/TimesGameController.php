@@ -121,20 +121,21 @@ class TimesGameController extends AbstractController
     }
 
 
-    #[Route('/statistic', name: 'app_times_game_statistic', methods: ['POST'])]
+    #[Route('/statistic', name: 'app_times_game_statistic', methods: ['GET'])]
     public function showStatistic(Request $request): Response
     {
         $user = $this->getUser();
         $statistic = null;
-        if ($user !== null) {
+        if ($user instanceof User) {
             $statistic = $this->statisticService->findByUser($user);
         }
 
         if ($statistic === null) {
-            $uniqueKey = $this->getCurrentDayCookie($request, self::KEY_UNIQUE_ID);
-            if ($uniqueKey !== null) {
-                $statistic = $this->statisticService->findByUser($user);
+            $uniqueIdCookie = $request->cookies->get('michi_wordle_unique_id');
+            if ($uniqueIdCookie !== null) {
+                $statistic = $this->statisticService->findByUniqueKey($uniqueIdCookie);
             }
+//            dd($statistic);
         }
 
         return $this->render('times_game/statistic.html.twig', [

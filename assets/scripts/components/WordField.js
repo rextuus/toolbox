@@ -91,8 +91,8 @@ export class WordField {
 
     async checkWord(word) {
         try {
-            const response = await fetch('/times/game/check', {
-            // const response = await fetch('https://michuwordle.com/index.php/times/game/check', {
+            // const response = await fetch('/times/game/check', {
+            const response = await fetch('https://michuwordle.com/index.php/times/game/check', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

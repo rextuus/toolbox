@@ -142,8 +142,8 @@ export class Key {
             'result': usedKeys['isCorrect']
         };
         try {
-            const response = await fetch('/times/game/save', {
-                // const response = await fetch('https://michuwordle.com/index.php/times/game/save', {
+            // const response = await fetch('/times/game/save', {
+                const response = await fetch('https://michuwordle.com/index.php/times/game/save', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

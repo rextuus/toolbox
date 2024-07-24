@@ -111,12 +111,18 @@ export class WordLine {
 
         // Check if the character is correct
         if (characters[index] === cell.textContent) {
-            state = 'correct';
+            return 'correct';
         }
 
         // If not correct but present in the string, mark as 'present'
-        if (state === 'absent' && characters.includes(cell.textContent)) {
-            state = 'present';
+        let occurrences = characters.filter(char => char === cell.textContent).length;
+        if (state === 'absent' && occurrences > 0) {
+            if (occurrences > 1) {
+                // character occurs already the second time
+                state = 'absent';
+            } else {
+                state = 'present';
+            }
         }
 
         return state;

@@ -353,7 +353,7 @@ class EscController extends AbstractController
                 '%s
                         <span>
                             <span class="flag fi fi-%s fis"></span>
-                            <span class="number">%s</span> <span class="country">%s</span>
+                            <span class="country">%s</span>
                         </span>
                         <span>
                             <span class="artist">%s - </span> 
@@ -362,7 +362,7 @@ class EscController extends AbstractController
                         ',
                 $additionalHtml,
                 $contributor[0],
-                $contributor[1],
+//                $contributor[1],
                 $contributor[2],
                 $contributor[3],
                 $contributor[4]

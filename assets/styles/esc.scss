@@ -4,7 +4,7 @@ $bodyBackground: #303030;
 $headerBackground: #303030;
 
 $poolBackground: #2a3954;
-$choiceBackground: #3d443d;
+$choiceBackground: rgba(253, 0, 0, 0.3);
 $choiceFont: #ffffff;
 
 $pointsBackground: #323232;
@@ -98,6 +98,9 @@ body{
   width: 100%;
   //color: #000000;
   cursor: default;
+  .new-points{
+    font-size: 0.6em;
+  }
 }
 
 .targets {
@@ -307,6 +310,11 @@ body{
 .animated {
   transition: all 1s ease-in-out;
 }
+
+.earned {
+  opacity: 0.7; // Fades out the element (lower value = more faded)
+}
+
 
 .vote-container{
   background: $poolBackground;

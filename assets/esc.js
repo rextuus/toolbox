@@ -113,10 +113,19 @@ document.addEventListener("DOMContentLoaded", function () {
                     count++;
 
                 }
+
+                resetCurrentGivenPoints();
+                await new Promise(resolve => setTimeout(resolve, 5000));
+
+
             }
 
             // Sort the list again after all users have been processed
             sort();
+
+            // Reset the points and cleanup after completing all votes processing
+            resetCurrentGivenPoints();
+
         }
 
 
@@ -187,13 +196,31 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 // Update points after a delay to allow time for CSS animation
                 setTimeout(() => {
-                    entry.textContent = (currentPoints + newPoints) + ' Punkte';
-
+                    entry.innerHTML = (currentPoints + newPoints) + ' Punkte <span class="new-points">  (+ ' + newPoints + ')</span>';
                     // Remove CSS classes to reset animation
                     entry.classList.remove('animated');
                     entry.classList.remove('highlight');
-                }, 1500); // Delay for 1 second
+                    entry.parentElement.classList.add('earned');
+                }, 1000); // Delay for 1 second
             }
+        }
+
+        function resetCurrentGivenPoints() {
+            console.log('clean');
+            // Select all country entries by their class or tag (adjust selector as needed)
+            const countryEntries = document.querySelectorAll('#participants-list .participant-list-entry');
+
+            // Iterate over each entry
+            countryEntries.forEach(entry => {
+                entry.parentElement.classList.remove('earned');
+                entry.classList.remove('earned');
+
+                // Remove the span with class "new-points"
+                const newPointsSpan = entry.querySelector('.new-points');
+                if (newPointsSpan) {
+                    newPointsSpan.remove(); // Remove the span element from DOM
+                }
+            });
         }
     }
 

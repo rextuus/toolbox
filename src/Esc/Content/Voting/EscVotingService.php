@@ -40,4 +40,9 @@ class EscVotingService
     {
         return $this->repository->findBy($conditions);
     }
+
+    public function findOneByNameAndEvent(string $name, $event): ?EscVoting
+    {
+        return $this->repository->findOneByNameAndEvent($name, $event);
+    }
 }

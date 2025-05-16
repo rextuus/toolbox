@@ -41,4 +41,18 @@ class EscVotingRepository extends AbstractBaseRepository
     //            ->getOneOrNullResult()
     //        ;
     //    }
+
+    public function findOneByNameAndEvent(string $name, $event): ?EscVoting
+    {
+        return $this->createQueryBuilder('e')
+            ->andWhere('e.name = :name')
+            ->andWhere('e.escEvent = :event')
+            ->setParameter('name', $name)
+            ->setParameter('event', $event)
+            ->orderBy('e.id', 'DESC')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    }
 }

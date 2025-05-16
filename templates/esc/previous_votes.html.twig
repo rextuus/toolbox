@@ -1,0 +1,94 @@
+{% extends 'esc/esc_base.html.twig' %}
+
+{% block title %}Previous Votes{% endblock %}
+
+{% block body %}
+    <div class="container-fluid mt-4">
+        <h1 class="mb-4">Your Previous Votes</h1>
+        
+        {% if usernames is empty %}
+            <div class="alert alert-info">
+                You haven't made any votes yet. <a href="{{ path('app_esc_vote') }}" class="alert-link">Go to voting page</a>.
+            </div>
+        {% else %}
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h2 class="h5 mb-0">Select a username to view votes</h2>
+                </div>
+                <div class="card-body">
+                    <form method="get" class="mb-3">
+                        <div class="form-group">
+                            <label for="username">Select Username:</label>
+                            <select name="username" id="username" class="form-control">
+                                <option value="">-- Select a username --</option>
+                                {% for username in usernames %}
+                                    <option value="{{ username }}" {% if selectedUsername == username %}selected{% endif %}>
+                                        {{ username }}
+                                    </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary mt-2">View Votes</button>
+                    </form>
+                </div>
+            </div>
+            
+            {% if selectedUsername and userVoting %}
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="h5 mb-0">Votes by {{ selectedUsername }}</h2>
+                    </div>
+                    <div class="card-body">
+                        <h3 class="h6">Your choices:</h3>
+                        <ul class="list-group">
+                            <li class="list-group-item">
+                                <strong>12 Points:</strong> 
+                                {{ choices[userVoting.firstChoice - 1]|raw }}
+                            </li>
+                            <li class="list-group-item">
+                                <strong>10 Points:</strong> 
+                                {{ choices[userVoting.secondChoice - 1]|raw }}
+                            </li>
+                            <li class="list-group-item">
+                                <strong>8 Points:</strong> 
+                                {{ choices[userVoting.thirdChoice - 1]|raw }}
+                            </li>
+                            <li class="list-group-item">
+                                <strong>7 Points:</strong> 
+                                {{ choices[userVoting.firthChoice - 1]|raw }}
+                            </li>
+                            <li class="list-group-item">
+                                <strong>6 Points:</strong> 
+                                {{ choices[userVoting.fifthChoice - 1]|raw }}
+                            </li>
+                            <li class="list-group-item">
+                                <strong>5 Points:</strong> 
+                                {{ choices[userVoting.sixthChoice - 1]|raw }}
+                            </li>
+                            <li class="list-group-item">
+                                <strong>4 Points:</strong> 
+                                {{ choices[userVoting.seventhChoice - 1]|raw }}
+                            </li>
+                            <li class="list-group-item">
+                                <strong>3 Points:</strong> 
+                                {{ choices[userVoting.eightChoice - 1]|raw }}
+                            </li>
+                            <li class="list-group-item">
+                                <strong>2 Points:</strong> 
+                                {{ choices[userVoting.ninthChoice - 1]|raw }}
+                            </li>
+                            <li class="list-group-item">
+                                <strong>1 Point:</strong> 
+                                {{ choices[userVoting.tenthChoice - 1]|raw }}
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            {% elseif selectedUsername %}
+                <div class="alert alert-warning">
+                    No votes found for {{ selectedUsername }}.
+                </div>
+            {% endif %}
+        {% endif %}
+    </div>
+{% endblock %}

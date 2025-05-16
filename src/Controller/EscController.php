@@ -236,6 +236,51 @@ class EscController extends AbstractController
     }
 
 
+    #[Route('/previous-votes', name: 'app_esc_previous_votes')]
+    public function previousVotes(Request $request): Response
+    {
+        $selectedUsername = null;
+        $userVoting = null;
+        $choices = null;
+
+        // Get the votes cookie
+        $votesCookie = $request->cookies->get('votes');
+        $usernames = [];
+
+        if ($votesCookie) {
+            $usernames = json_decode($votesCookie, true);
+            $usernames = array_map(
+                function ($username) {
+                    return str_replace('"', '', $username);
+                },
+                $usernames
+            );
+        }
+
+        // If a username is selected in the form
+        if ($request->query->has('username')) {
+            $selectedUsername = $request->query->get('username');
+
+            // Get the latest event
+            $activeEvent = $this->escEventService->getCurrentlyActiveEvent();
+
+            // Find the voting for this user
+            $userVoting = $this->escVotingService->findOneByNameAndEvent($selectedUsername, $activeEvent);
+
+            if ($userVoting) {
+                // Get the choices for display
+                $choices = $this->getChoices($activeEvent->getParticipantList());
+            }
+        }
+
+        return $this->render('esc/previous_votes.html.twig', [
+            'usernames' => $usernames,
+            'selectedUsername' => $selectedUsername,
+            'userVoting' => $userVoting,
+            'choices' => $choices,
+        ]);
+    }
+
     #[Route('/result-overview', name: 'app_esc_result_overview')]
     public function getResultOverview(Request $request): Response
     {

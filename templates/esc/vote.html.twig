@@ -3,7 +3,22 @@
 {% block title %}ESC Vote{% endblock %}
 
 {% block body %}
-    <div class="container" id="container">
+    <div class="container-fluid" id="container">
+
+        <div id="errorModal" class="modal">
+            <div class="modal-content">
+                <p id="errorMessage">Error Message</p>
+            </div>
+        </div>
+        <div id="confirmationModal" class="modal">
+            <div class="modal-content">
+                <p>Möchtest du dein voting wirklich abgeben?</p>
+                <button class="modal-confirm" id="confirmYes">Yes</button>
+                <button class="modal-decline" id="confirmNo">No</button>
+            </div>
+        </div>
+
+
         <div id="targets" class="targets visible">
             <div class="choice-label">Dein Voting</div>
             {% for field in fields %}
@@ -26,22 +41,6 @@
         <div id="approval" class="approval">
             Abschicken
         </div>
-
-        <div id="errorModal" class="modal">
-            <div class="modal-content">
-{#                <span class="modal-close">&times;</span>#}
-                <p id="errorMessage">Error Message</p>
-            </div>
-        </div>
-        <div id="confirmationModal" class="modal">
-            <div class="modal-content">
-{#                <span class="modal-close" id="confirm-close">&times;</span>#}
-                <p>Möchtest du dein voting wirklich abgeben?</p>
-                <button class="modal-confirm" id="confirmYes">Yes</button>
-                <button class="modal-decline" id="confirmNo">No</button>
-            </div>
-        </div>
-
+        <div style="width: 100px">-</div>
     </div>
-
 {% endblock %}

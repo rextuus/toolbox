@@ -33,6 +33,7 @@ Encore
     .addEntry('admin', './assets/admin.js')
     .addEntry('esc', './assets/esc.js')
     .addEntry('times', './assets/times.js')
+    .addEntry('calendar', './assets/calendar.js')
 
     // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.
     .splitEntryChunks()

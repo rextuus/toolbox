@@ -3,7 +3,7 @@
 {% block title %}ESC Vote{% endblock %}
 
 {% block body %}
-<div class="container" id="container">
+<div class="container-fluid" id="container">
     <div class='animation-header'>
         <div id='active-giveaway'>
             <p>Current Point Giveaway:</p>
@@ -15,10 +15,10 @@
         <h2>Aktuelle Punkteliste</h2>
         <ul id='participants-list'>
             {% for participant in participants %}
-            <li class="participant-list-entry">
-                {{ participant|raw }}
-                <span id="{{ participantNames[loop.index - 1] }}" class="">0 Punkte</span>
-            </li>
+                <li class="participant-list-entry">
+                    {{ participant|raw }}
+                    <span id="{{ participantNames[loop.index - 1] }}" class="">0 Punkte</span>
+                </li>
 
             {% endfor %}
         </ul>
@@ -46,4 +46,4 @@
         let data = {{ votesRaw|json_encode|raw }};
         let flags = {{ flags|json_encode|raw }};
     </script>
-    {% endblock %}
+{% endblock %}

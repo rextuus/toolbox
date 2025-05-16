@@ -40,6 +40,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 await new Promise(resolve => setTimeout(resolve, 300));
 
                 let html = '<span class="summary">';
+                html = html + '<span class="user-name">'+ user.name+'</span> is giving ';
                 let counter = 0;
                 for (const key in user.votes) {
                     if (counter < 7){
@@ -84,7 +85,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         let html =
                             '<span class="user-name">'+ user.name+'</span> is giving ' +
                             '<span class="points">'+ user.votes[key]+ '</span> points to ' +
-                            '<span class="country">'+key+ '</span>';
+                            '<span class="country">'+key+ ' <span class="flag fi fi-'+flags[key]+' fis"></span></span>';
                         setModalText(html);
                         jsConfetti.addConfetti()
                         openModal();
@@ -477,6 +478,16 @@ document.addEventListener("DOMContentLoaded", function () {
             xhr.onreadystatechange = function () {
                 if (xhr.readyState === XMLHttpRequest.DONE) {
                     if (xhr.status === 201) {
+                        let votes = getCookie('votes');
+                        if (votes === null) {
+                            votes = [getCookie('name')];
+                        } else {
+                            votes = JSON.parse(votes);
+                            votes.push(getCookie('name'));
+                        }
+
+                        setCookieWithObject('votes', votes, 365);
+
                         removeCookie('name');
                         removeCookie('choices');
                         document.getElementById('name').value = null;

@@ -1,3 +1,5 @@
+@import '~bootstrap/scss/bootstrap';
+
 $bodyBackground: #303030;
 $headerBackground: #303030;
 
@@ -10,7 +12,7 @@ $targetBackground: $poolBackground;
 
 body{
   background: $bodyBackground;
-  background-image: url('https://res.cloudinary.com/dl4y4cfvs/image/upload/v1715264826/esc/ecb40128-439f-425e-a460-8b29f483e22a.png'); /* Adjust the path as needed */
+  //background-image: url('https://res.cloudinary.com/dl4y4cfvs/image/upload/v1715264826/esc/ecb40128-439f-425e-a460-8b29f483e22a.png'); /* Adjust the path as needed */
   background-size: cover; /* Ensure the background image covers the entire viewport */
   background-position: center; /* Center the background image */
   margin: 0px;
@@ -100,7 +102,6 @@ body{
 
 .targets {
   background: $poolBackground;
-
   margin: 20px;
   border: 2px solid #4a4a4a;
   padding: 20px;
@@ -151,34 +152,35 @@ body{
 
 .container {
   height: 100vh;
+  margin: 0;
   margin-bottom: 50px;
 
-  .name{
-    font-size: 3.3em;
-    background: #415d35;
-    margin: 20px;
-    padding: 20px;
-    border: 2px solid black;
-    border-radius: 10px;
-    color: #eaeaea;
-    cursor: pointer;
-    width: fit-content;
-  }
+}
 
-  .approval{
-    font-size: 3.3em;
-    background: #415d35;
-    margin: 20px;
-    margin-bottom: 100px;
-    padding: 20px;
+.name{
+  font-size: 3.3em;
+  background: #415d35;
+  margin: 20px;
+  padding: 20px;
+  border: 2px solid black;
+  border-radius: 10px;
+  color: #eaeaea;
+  cursor: pointer;
+  width: fit-content;
+}
 
-    border: 2px solid black;
-    border-radius: 10px;
-    color: #eaeaea;
-    cursor: pointer;
-    width: fit-content;
-  }
-  margin-bottom: 30px;
+.approval{
+  font-size: 3.3em;
+  background: #415d35;
+  margin: 20px;
+  margin-bottom: 100px;
+  padding: 20px;
+
+  border: 2px solid black;
+  border-radius: 10px;
+  color: #eaeaea;
+  cursor: pointer;
+  width: fit-content;
 }
 
 
@@ -272,15 +274,21 @@ body{
 }
 
 .user-name {
+  font-size: 2em;
+  font-weight: bold;
   color: #1f78b4;
 }
 
 .points {
+  font-size: 2.5em;
+  font-weight: bold;
   color: #e31a1c;
 }
 
 .country {
-  //color: #33a02c;
+  font-size: 1.5em;
+  font-weight: bold;
+  color: black;
 }
 
 @keyframes fadeIn {

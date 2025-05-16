@@ -4,15 +4,22 @@
 
 {% block body %}
 
-    <div class="container">
+    <div class="container-fluid">
 
     <div class="main">
         <div class="intro">
-            <p class="intro-text">Welcome to Eurovision Song Contest 2024 in Sweden!</p>
-            <span class="spacer"></span>
-            <a href="{{ path('app_esc_vote') }}" class="button">Vote Now</a>
-            <a href="{{ path('app_esc_result') }}" class="button">View Results</a>
-            <a href="{{ path('app_esc_result_overview') }}" class="button">Result Details</a>
+            <p class="intro-text mb-5">Welcome to Eurovision Song Contest 2025 in Switzerland!</p>
+            <div class="mt-5">
+                <div class="mb-5 mt-5">
+                    <a href="{{ path('app_esc_vote') }}" class="button">Vote Now</a>
+                </div>
+                <div class="mb-5 mt-5">
+                    <a href="{{ path('app_esc_result') }}" class="button">View Results</a>
+                </div>
+                <div class="mb-5 mt-5">
+                    <a href="{{ path('app_esc_result_overview') }}" class="button">Result Details</a>
+                </div>
+            </div>
         </div>
     </div>
     </div>

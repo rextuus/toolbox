@@ -5,6 +5,7 @@
     <title>{% block title %}Welcome!{% endblock %}</title>
     <link rel="icon"
           href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
     {% block stylesheets %}
         {{ encore_entry_link_tags('esc') }}
     {% endblock %}
@@ -16,22 +17,18 @@
 <header>
     <div class="header">
         <a href="{{ path('app_esc_index') }}" class="back-link">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-home">
-                <path d="M3 9l9-7 9 7v9a2 2 0 0 1-2 2h-3v-7a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v7H5a2 2 0 0 1-2-2V9z"></path>
-                <polyline points="9 22 9 12 15 12 15 22"></polyline>
-            </svg>
+            <i class="fa fa-home" aria-hidden="true"></i>
             Home
         </a>
         <div class="welcome">
-            <h1>Eurovision Song Contest 2024</h1>
+            <h1>Eurovision Song Contest 2025</h1>
         </div>
     </div>
 </header>
+
 <body>
+
 {% block body %}{% endblock %}
-<span style="min-height: 200px; height: 200px"></span>
+<div class="footer">a product of the &copy;WH-Company</div>
 </body>
-{#<footer>#}
-    <div class="footer">a product of the &copy;WH-Company</div>
-{#</footer>#}
 </html>

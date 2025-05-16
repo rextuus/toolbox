@@ -7,6 +7,8 @@ use App\Esc\Content\Event\EscEventService;
 use App\Esc\Content\Voting\Data\EscVotingData;
 use App\Esc\Content\Voting\EscVotingRelation;
 use App\Esc\Content\Voting\EscVotingService;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,7 +20,8 @@ class EscController extends AbstractController
 {
     public function __construct(
         private readonly EscEventService $escEventService,
-        private readonly EscVotingService $escVotingService
+        private readonly EscVotingService $escVotingService,
+        private readonly EntityManagerInterface $entityManager,
     ) {
     }
 
@@ -76,35 +79,41 @@ class EscController extends AbstractController
         ];
 
         $final = [
-            ['se', "01", "Schweden", "Marcus & Martinus", "Unforgettable"],
-            ["ua", "02", "Ukraine", "Alyona Alyona & Jerry Heil", "Teresa & Maria"],
-            ['de', "03", "Deutschland", "Isaak", "Always On The Run"],
-            ["lu", "04", "Luxemburg", "Tali", "Fighter"],
-            ['nl', "05", "Niederlande", "Joost Klein", "Europapa"],
-            ['il', "06", "Israel", "Eden Golan", "Hurricane"],
-            ["lt", "07", "Litauen", "Silvester Belt", "Luktelk"],
-            ['es', "08", "Spanien", "Nebulossa", "Zorra"],
-            ['ee', "09", "Estland", "5Miinust & Puuluup", "(Nendest) narkootikumidest ei tea me (küll) midagi"],
-            ["ie", "10", "Irland", "Bambie Thug", "Doomsday Blue"],
-            ['lv', "11", "Lettland", "Dons", "Hollow"],
-            ['gr', "12", "Griechenland", "Marina Satti", "Zari"],
-            ['gb', "13", "UK", "Olly Alexander", "Dizzy"],
-            ['no', "14", "Norwegen", "Gåte", "Ulveham"],
-            ['it', "15", "Italien", "Angelina Mango", "La noia"],
-            ["rs", "16", "Serbien", "Teya Dora", "Ramonda"],
-            ["fi", "17", "Finnland", "Windows95man", "No Rules"],
-            ["pt", "18", "Portugal", "Iolanda", "Grito"],
-            ['am', "19", "Armenien", "Ladaniva", "Jako"],
-            ["cy", "20", "Zypern", "Silia Kapsis", "Liar"],
-            ['ch', "21", "Schweiz", "Nemo", "The Code"],
-            ["si", "22", "Slowenien", "Raiven", "Veronika"],
-            ["hr", "23", "Kroatien", "Baby Lasagna", "Rim Tim Tagi Dim"],
-            ['ge', "24", "Georgien", "Nutsa Buzaladze", "Fire Fighter"],
-            ['fr', "25", "Frankreich", "Slimane", "Mon amour"],
-            ['at', "26", "Österreich", "Kaleen", "We Will Rave"],
+            ['no', "01", "Norwegen", "Kyle Alessandro", "Lighter"],
+            ['lu', "02", "Luxemburg", "Laura Thorn", "La poupée monte le son"],
+            ['ee', "03", "Estland", "Tommy Cash", "Espresso Macchiato"],
+            ['il', "04", "Israel", "Yuval Raphael", "New Day Will Rise"],
+            ['lt', "05", "Litauen", "Katarsis", "Tavo Akys"],
+            ['es', "06", "Spanien", "Melody", "Esa diva"],
+            ['ua', "07", "Ukraine", "Ziferblat", "Bird Of Pray"],
+            ['gb', "08", "Großbritannien", "Remember Monday", "What The Hell Just Happened?"],
+            ['at', "09", "Österreich", "JJ", "Wasted Love"],
+            ['is', "10", "Island", "VÆB", "Róa"],
+            ['lv', "11", "Lettland", "Tautumeitas", "Bur man laimi"],
+            ['nl', "12", "Niederlande", "Claude", "C'est la vie"],
+            ['fi', "13", "Finnland", "Erika Vikman", "Ich komme"],
+            ['it', "14", "Italien", "Lucio Corsi", "Volevo essere un duro"],
+            ['pl', "15", "Polen", "Justyna Steczkowska", "Gaja"],
+            ['de', "16", "Deutschland", "Abor & Tynna", "Baller"],
+            ['gr', "17", "Griechenland", "Klavdia", "Asteromata"],
+            ['am', "18", "Armenien", "Parg", "Survivor"],
+            ['ch', "19", "Schweiz", "Zoë Më", "Voyage"],
+            ['mt', "20", "Malta", "Miriana Conte", "Serving"],
+            ['pt', "21", "Portugal", "NAPA", "Deslocado"],
+            ['dk', "22", "Dänemark", "Sissal", "Hallucination"],
+            ['se', "23", "Schweden", "KAJ", "Bara bada bastu"],
+            ['fr', "24", "Frankreich", "Louane", "Maman"],
+            ['sm', "25", "San Marino", "Gabry Ponte", "Tutta l'Italia"],
+            ['al', "26", "Albanien", "Shkodra Elektronike", "Zjerm"],
         ];
 
         $activeEvent = $this->escEventService->getCurrentlyActiveEvent();
+
+        if (count($activeEvent->getParticipantList()) === 0){
+            $activeEvent->setParticipantList($final);
+            $this->entityManager->persist($activeEvent);
+            $this->entityManager->flush();
+        }
 
         $choices = $this->getChoices($activeEvent->getParticipantList());
 
